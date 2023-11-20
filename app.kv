@@ -1,8 +1,93 @@
-<App>:
-    orientation: 'vertical'
-    pedding: 20 
-    Label: 
-        text:'insira o preco'
-        font_size:20 
-        text_size: self_size
-    
+#import RiseInTransition kivy.uix.screenmanager.RiseINTransition
+#import SideTransition kivy.uix.screenmanager.SlideTransition
+<ElementCard@MDCard>:
+    radius:'10dp'
+    spacing:'10dp'
+    padding:'10dp'
+    image:''
+    text:''
+    sub_text:''
+    orientation:'vertical'
+    ripple_behavior:True
+    on_release:
+        app.root.transition= RiseInTransition()
+    image:
+        root.image
+
+
+    MDBoxLayout:
+        orientation: 'vertical'
+        MDLabel:
+            text:root.text
+            halign: 'center'  # or any other valid value
+
+    MDLabel:
+        sub_text: root.sub_text
+        halign:'center'
+
+<CustomizeScreen@MDBoxLayout>:
+    orientation:'vertical'
+    text:''
+    padding:100
+    MDLabel:
+        text:root.text
+        halign:'center'
+        pos_hint:{'center_x: .5'}
+    MDFillRoundFlatButton:
+        text:'REGRESSAR'
+        pos_hist:{'center_x':0.5}
+        on_release:
+            app.root.current='screen_principal'
+            app.root.transition=    SlideTransition(direction='left')
+<ui>:
+# Import Statements
+from kivy.uix.screenmanager import RiseInTransition, SlideTransition
+
+# ...
+
+<ui>:
+    MDScreen:
+        name:'screen_principal'
+        md_bg_color: 0, .5, .5, 1
+        MDBoxLayout:
+            orientation:'vertical'
+            MDBoxLayout:
+                size_hint: 1, .2
+                orientation:'horizontal'
+                padding:'10dp'
+                MDCard:
+                    radius:'10dp'
+                    padding:'10dp'
+                    line_color: 1, 0, 1, 1
+                    MDLabel:
+                        text:'App medicamentos'
+                        halign: 'center'
+                        pos_hint: {'center_y': 0.5}
+                    MDSwitch:
+                        pos_hint: {'center_y': 0.5}
+                        on_active:
+                            app.change_style(*args)
+            MDGridLayout:
+                cols: 3
+                size_hint: 1, .8
+                padding: ['100dp', '10dp', '10dp', '10dp']
+
+                ElementCard:
+                    text: 'MEDICAMENTO'
+                    image: 'images/medicine.png'  # Fix the image path
+                    on_release:
+                        root.current ='screen1'
+    MDScreen:
+        name:'screen1'
+        CustomizeScreen:
+            text: 'Panatalla Uno'
+
+
+
+
+
+
+
+
+
+
